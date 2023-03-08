@@ -1,15 +1,11 @@
-import React, {useState} from 'react';
 
-
-export function DatePicker() {
-
-    const [date, setDate] = useState<Date | null>();
-
-    console.log("date", date);
-
-    return(
-        <input type="date" onChange={e=>setDate(new Date(e.target.value))} />
-    )
-
+interface IDatePicker {
+    handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
+export function DatePicker(props: IDatePicker) {
+
+    return(
+        <input type="date" onChange={props.handleChange} />
+    )
+}
