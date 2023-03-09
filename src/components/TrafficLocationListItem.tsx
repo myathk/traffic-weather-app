@@ -1,9 +1,11 @@
 import { ITrafficLocation } from "../interfaces/ITrafficImages";
 import { ITrafficWeatherCamera } from "../interfaces/ITrafficWeatherCamera"
+import { IForecast } from "../interfaces/IWeatherForecasts";
 
 interface ITrafficLocationListItem {
     trafficWeatherCamera: ITrafficWeatherCamera;
-    handleClick: React.MouseEventHandler<HTMLDivElement>;
+    setImage: React.Dispatch<React.SetStateAction<string>>;
+    setForecast: React.Dispatch<React.SetStateAction<IForecast | undefined>>;
 }
 
 export const TrafficLocationListItem = (props: ITrafficLocationListItem) => {
@@ -12,12 +14,16 @@ export const TrafficLocationListItem = (props: ITrafficLocationListItem) => {
     const location: ITrafficLocation = trafficWeatherCamera?.trafficCamera?.location;
     const area:String = trafficWeatherCamera?.forecast?.area;
 
+    const handleTrafficLocationOnClick: React.MouseEventHandler<HTMLDivElement> = () => {
+          props.setImage(trafficWeatherCamera?.trafficCamera?.image);
+          props.setForecast(trafficWeatherCamera?.forecast);
+    } 
+
     return(
         <li>
-            <div onClick={props.handleClick}>
+            <div onClick={handleTrafficLocationOnClick}>
                 <h3>{location.latitude} {location.longitude} {area}</h3>
             </div>
-
         </li>
     )
 }
