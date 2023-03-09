@@ -5,7 +5,7 @@ import { getDistance } from "../utils/getDistance";
 
 const getNearestForecast = (targetLocation:ITrafficLocation, areas:IArea[], forecasts: IForecast[]):IForecast => {
 
-    const correspondingArea = areas.reduce((previousArea, currentArea, currentIndex, areas) => {
+    const correspondingArea = areas.reduce((previousArea, currentArea) => {
         const prevLocation:ITrafficLocation = previousArea.label_location;
         const currLocation:ITrafficLocation = currentArea.label_location;
 
@@ -42,11 +42,15 @@ export const getTrafficWeatherCameras = (trafficCameras: ITrafficCamera[], areas
 
             return { 
                 trafficCamera: trafficCamera,
-                forecast: forecast
+                forecast: forecast,
+                id: trafficCamera.camera_id
             }
         }
     );
     
-    console.log(trafficWeatherCameras)
-    return trafficWeatherCameras;
+    const sortedTrafficWeatherCameras:ITrafficWeatherCamera[] = trafficWeatherCameras.sort((twc1:ITrafficWeatherCamera, twc2:ITrafficWeatherCamera) => {
+        return twc1.forecast.area < twc2.forecast.area ? -1 : twc1.forecast.area > twc2.forecast.area ? 1 : 0;
+    });
+
+    return sortedTrafficWeatherCameras;
 }

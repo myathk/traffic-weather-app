@@ -4,4 +4,5 @@ import { IForecast } from "./IWeatherForecasts";
 export interface ITrafficWeatherCamera {
   trafficCamera: ITrafficCamera;
   forecast: IForecast;
+  id: number;
 }

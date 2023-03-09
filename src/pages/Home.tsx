@@ -12,6 +12,7 @@ import { getAreas } from '../functions/getAreas';
 import { getForecasts } from '../functions/getForecasts';
 import { ITrafficWeatherCamera } from '../interfaces/ITrafficWeatherCamera';
 import { getTrafficWeatherCameras } from '../functions/getTrafficWeatherCameras';
+import { TrafficLocationListItem } from '../components/TrafficLocationListItem';
 
 export const Home = () => {
     const [date, setDate] = useState<Date | undefined>();
@@ -40,6 +41,16 @@ export const Home = () => {
     <div className="App">
       <DatePicker handleChange={handleDateChange}/>
       <TimePicker handleChange={handleTimeChange}/>
+
+      <br>
+      </br>
+
+      <ul>
+        {
+          twc.map(item => <TrafficLocationListItem trafficWeatherCamera={item} key={item.id}/>)
+        }
+      </ul>
+
     </div>
   );
 }
