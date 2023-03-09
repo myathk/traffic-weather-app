@@ -10,6 +10,8 @@ import { IArea, IForecast, IWeatherForecastsResponse } from '../interfaces/IWeat
 import { useWeatherForecastAPI } from '../hooks/useWeatherForecastAPI';
 import { getAreas } from '../functions/getAreas';
 import { getForecasts } from '../functions/getForecasts';
+import { ITrafficWeatherCamera } from '../interfaces/ITrafficWeatherCamera';
+import { getTrafficWeatherCameras } from '../functions/getTrafficWeatherCameras';
 
 export const Home = () => {
     const [date, setDate] = useState<Date | undefined>();
@@ -20,6 +22,7 @@ export const Home = () => {
     const areas:IArea[] = getAreas(weatherForecasts);
     const trafficCameras:ITrafficCamera[] = getTrafficCameras(trafficImages);
     const forecasts:IForecast[] = getForecasts(weatherForecasts);
+    const twc:ITrafficWeatherCamera[] = getTrafficWeatherCameras(trafficCameras, areas, forecasts);
 
     const handleDateChange: React.ChangeEventHandler<HTMLInputElement> = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -37,7 +40,6 @@ export const Home = () => {
     <div className="App">
       <DatePicker handleChange={handleDateChange}/>
       <TimePicker handleChange={handleTimeChange}/>
-
     </div>
   );
 }

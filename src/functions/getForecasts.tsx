@@ -5,10 +5,9 @@ export const getForecasts = (data: IWeatherForecastsResponse | undefined):IForec
     if (data) {
         const timestampedForecasts: ITimestampedForecast[] = data.items;
         const forecasts: IForecast[] = timestampedForecasts[0].forecasts;
-        if (forecasts == undefined) {
+        if (forecasts === undefined) {
           return [];
         }
-        console.log(forecasts);
         return forecasts;
     } else {
         return [];

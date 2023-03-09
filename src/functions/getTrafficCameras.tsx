@@ -5,7 +5,7 @@ export const getTrafficCameras = (data: ITrafficImagesResponse | undefined):ITra
     if (data) {
         const items: ITrafficItems[] = data.items;
         const cameras: ITrafficCamera[] = items[0].cameras;
-        if (cameras == undefined) {
+        if (cameras === undefined) {
             return [];
         }
         return cameras;
