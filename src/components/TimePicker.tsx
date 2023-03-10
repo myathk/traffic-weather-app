@@ -6,6 +6,6 @@ interface ITimePicker {
 export const TimePicker = (props: ITimePicker) => {
 
     return(
-        <input type="time" onChange={props.handleChange} />
+        <input className="time-picker" type="time" onChange={props.handleChange} />
     )
 }

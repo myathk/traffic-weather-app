@@ -10,7 +10,7 @@ export const useTrafficImagesAPI = (date: Date | undefined, time: String | undef
     const callAPI = async () => {
         if (dateTime) {
             const { data } = await axios.get<ITrafficImagesResponse>(`https://api.data.gov.sg/v1/transport/traffic-images?date_time=${dateTime}`);
-            
+            console.log(data)
             return data;
         }
   }

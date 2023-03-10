@@ -1,3 +1,4 @@
+import '../App.css'
 
 interface IDatePicker {
     handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -6,6 +7,6 @@ interface IDatePicker {
 export const DatePicker = (props: IDatePicker) => {
 
     return(
-        <input type="date" onChange={props.handleChange} />
+        <input className="date-picker" type="date" onChange={props.handleChange} />
     )
 }
