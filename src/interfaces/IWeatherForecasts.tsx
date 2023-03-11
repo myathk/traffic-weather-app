@@ -1,17 +1,17 @@
-import { ITrafficLocation } from "./ITrafficImages";
+import { ITrafficLocation } from './ITrafficImages';
 
 export interface IWeatherForecastsResponse {
   api_info: {
-    status: "healthy";
-  }
+    status: 'healthy';
+  };
   area_metadata: IArea[];
   items: ITimestampedForecast[];
-};
+}
 
 export interface IArea {
   name: string;
-  label_location: ITrafficLocation
-};
+  label_location: ITrafficLocation;
+}
 
 export interface ITimestampedForecast {
   update_timestamp: string;
@@ -19,7 +19,7 @@ export interface ITimestampedForecast {
   valid_period: {
     start: string;
     end: string;
-  }
+  };
   forecasts: IForecast[];
 }
 
