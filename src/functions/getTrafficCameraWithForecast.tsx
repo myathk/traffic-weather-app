@@ -1,5 +1,5 @@
 import { ITrafficCamera, ITrafficLocation } from "../interfaces/ITrafficImages";
-import { ITrafficWeatherCamera } from "../interfaces/ITrafficWeatherCamera";
+import { ITrafficCameraWithForecast } from "../interfaces/ITrafficCameraWithForecast";
 import { IArea, IForecast } from "../interfaces/IWeatherForecasts";
 import { getDistance } from "../utils/getDistance";
 
@@ -28,13 +28,13 @@ const getNearestForecast = (targetLocation:ITrafficLocation, areas:IArea[], fore
     return nearestForecast[0];
 }
 
-export const getTrafficWeatherCameras = (trafficCameras: ITrafficCamera[], areas:IArea[], forecasts: IForecast[]):ITrafficWeatherCamera[] | [] => {
+export const getTrafficCameraWithForecast = (trafficCameras: ITrafficCamera[], areas:IArea[], forecasts: IForecast[]):ITrafficCameraWithForecast[] | [] => {
 
     if (areas.length === 0 || trafficCameras.length === 0 || forecasts.length === 0) {
         return [];
     }
  
-    const trafficWeatherCameras:ITrafficWeatherCamera[] = trafficCameras.map(
+    const trafficWeatherCameras:ITrafficCameraWithForecast[] = trafficCameras.map(
         (trafficCamera:ITrafficCamera) => {
 
             const location:ITrafficLocation = trafficCamera.location;
@@ -48,7 +48,7 @@ export const getTrafficWeatherCameras = (trafficCameras: ITrafficCamera[], areas
         }
     );
     
-    const sortedTrafficWeatherCameras:ITrafficWeatherCamera[] = trafficWeatherCameras.sort((twc1:ITrafficWeatherCamera, twc2:ITrafficWeatherCamera) => {
+    const sortedTrafficWeatherCameras:ITrafficCameraWithForecast[] = trafficWeatherCameras.sort((twc1:ITrafficCameraWithForecast, twc2:ITrafficCameraWithForecast) => {
         return twc1.forecast.area < twc2.forecast.area ? -1 : twc1.forecast.area > twc2.forecast.area ? 1 : 0;
     });
 

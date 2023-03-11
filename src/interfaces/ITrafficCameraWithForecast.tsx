@@ -1,7 +1,7 @@
 import { ITrafficCamera } from "./ITrafficImages";
 import { IForecast } from "./IWeatherForecasts";
 
-export interface ITrafficWeatherCamera {
+export interface ITrafficCameraWithForecast {
   trafficCamera: ITrafficCamera;
   forecast: IForecast;
   id: number;

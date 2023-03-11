@@ -1,4 +1,3 @@
-
 import '../App.css'
 import { DatePicker } from '../components/DatePicker';
 import { TimePicker } from '../components/TimePicker';
@@ -10,18 +9,17 @@ import { IForecast, IWeatherForecastsResponse } from '../interfaces/IWeatherFore
 import { useWeatherForecastAPI } from '../hooks/useWeatherForecastAPI';
 import { getAreas } from '../functions/getAreas';
 import { getForecasts } from '../functions/getForecasts';
-import { ITrafficWeatherCamera } from '../interfaces/ITrafficWeatherCamera';
-import { getTrafficWeatherCameras } from '../functions/getTrafficWeatherCameras';
+import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithForecast';
+import { getTrafficCameraWithForecast } from '../functions/getTrafficCameraWithForecast';
 import { TrafficLocationListItem } from '../components/TrafficLocationListItem';
 import { Weather } from '../components/Weather';
 import { Image } from '../components/Image';
 import { Container } from '@mui/system';
-import { Button } from '@mui/material';
+import { Button, Grid, makeStyles } from '@mui/material';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-
-
-
+import { getNestedTCwF } from '../functions/getNestedTCwF';
+import { TrafficLocationNestedList } from '../components/TrafficLocationNestedList';
 
 export const Home = () => {
     const [date, setDate] = useState<Date | undefined>();
@@ -32,10 +30,12 @@ export const Home = () => {
     const trafficImages:ITrafficImagesResponse | undefined = useTrafficImagesAPI(date, time);
     const weatherForecasts:IWeatherForecastsResponse | undefined = useWeatherForecastAPI(date, time);
 
-    const twc:ITrafficWeatherCamera[] = getTrafficWeatherCameras(
+    const twc:ITrafficCameraWithForecast[] = getTrafficCameraWithForecast(
       getTrafficCameras(trafficImages),
       getAreas(weatherForecasts),
       getForecasts(weatherForecasts));
+
+    const nestedTCwF:ITrafficCameraWithForecast[][] = getNestedTCwF(twc);
 
     const handleDateChange: React.ChangeEventHandler<HTMLInputElement> = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -54,31 +54,35 @@ export const Home = () => {
     }
 
   return (
-      <Container maxWidth="lg" style={{backgroundColor: "#b3c6ff"}}>
+
+      <Grid direction={'column'} container alignItems={'center'} style={{backgroundColor: "#b3c6ff"}}>
     
-          <Box>
+          <Grid  justifyContent={'center'} style={{background: "black"}} sx={{borderRadius:'30px', border: 'solid black 10px', margin:'15px'}} >
             <DatePicker handleChange={handleDateChange}/>
             <TimePicker handleChange={handleTimeChange}/>
-            <Button>
-              Click
-            </Button>
-          </Box>
-            <br>
-            </br>
-          <Box display={'flex'} flexDirection={'row'} justifyContent={'center'}>
-            <Box style={{maxHeight:"100vh", overflow:'auto'}}>
-              <List>            <ul>
+
+          </Grid>
+
+          <Grid display={'flex'} flexDirection={'row'}>
+            <Grid style={{maxHeight:"80vh", overflow:'auto'}}>
+              <List>
                 {
-                  twc.map(item => <TrafficLocationListItem trafficWeatherCamera={item} key={item.id} setForecast={setSelectedForecast} setImage={setSelectedImage}/>)
+                  nestedTCwF.length > 0 ?
+                  nestedTCwF.map(item => <TrafficLocationNestedList tcwfs={item} key={item[0].forecast.area} setForecast={setSelectedForecast} setImage={setSelectedImage}/>)
+                  : ""
                 }
-              </ul>
               </List>
-              </Box>
-              <Box>
+              </Grid>
+
+              <Grid>
               <Weather forecast={selectedForecast}/>
               <Image url={selectedImage}/>
-              </Box>
-          </Box>
-      </Container>
+              </Grid>
+
+          </Grid>
+
+          
+      </Grid>
+
   );
 }

@@ -1,16 +1,17 @@
+import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { ITrafficLocation } from "../interfaces/ITrafficImages";
-import { ITrafficWeatherCamera } from "../interfaces/ITrafficWeatherCamera"
+import { ITrafficCameraWithForecast } from "../interfaces/ITrafficCameraWithForecast"
 import { IForecast } from "../interfaces/IWeatherForecasts";
 
 interface ITrafficLocationListItem {
-    trafficWeatherCamera: ITrafficWeatherCamera;
+    trafficWeatherCamera: ITrafficCameraWithForecast;
     setImage: React.Dispatch<React.SetStateAction<string>>;
     setForecast: React.Dispatch<React.SetStateAction<IForecast | undefined>>;
 }
 
 export const TrafficLocationListItem = (props: ITrafficLocationListItem) => {
 
-    const trafficWeatherCamera: ITrafficWeatherCamera = props.trafficWeatherCamera;
+    const trafficWeatherCamera: ITrafficCameraWithForecast = props.trafficWeatherCamera;
     const location: ITrafficLocation = trafficWeatherCamera?.trafficCamera?.location;
     const area:String = trafficWeatherCamera?.forecast?.area;
 
@@ -20,10 +21,13 @@ export const TrafficLocationListItem = (props: ITrafficLocationListItem) => {
     } 
 
     return(
-        <li>
-            <div onClick={handleTrafficLocationOnClick}>
-                <h3>{location.latitude} {location.longitude} {area}</h3>
-            </div>
-        </li>
+        <>
+       <ListItemButton divider onClick={handleTrafficLocationOnClick}>
+
+        <ListItemText primary={area} secondary={location.latitude + " " + location.latitude}>
+
+        </ListItemText>
+       </ListItemButton>
+       </>
     )
 }
