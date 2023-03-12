@@ -22,7 +22,8 @@ import { TrafficLocationNestedList } from '../components/TrafficLocationNestedLi
 
 export const Home = () => {
   const [date, setDate] = useState<Date | undefined>();
-  const [time, setTime] = useState<String | undefined>();
+  const [time, setTime] = useState<string | undefined>();
+  const [openAreaList, setOpenAreaList] = useState<string | null>(null);
   const [selectedForecast, setSelectedForecast] = useState<IForecast | undefined>();
   const [selectedImage, setSelectedImage] = useState<string>(
     'https://www.lta.gov.sg/content/dam/ltagov/img/general/logo.png',
@@ -73,7 +74,7 @@ export const Home = () => {
 
       <Grid display={'flex'} flexDirection={'row'}>
         <Grid style={{ maxHeight: '80vh', overflow: 'auto' }}>
-          <List>
+          <List style={{}}>
             {nestedTCwF.length > 0
               ? nestedTCwF.map((item) => (
                   <TrafficLocationNestedList
@@ -81,6 +82,8 @@ export const Home = () => {
                     key={item[0].forecast.area}
                     setForecast={setSelectedForecast}
                     setImage={setSelectedImage}
+                    openAreaList={openAreaList}
+                    setOpenAreaList={setOpenAreaList}
                   />
                 ))
               : ''}
