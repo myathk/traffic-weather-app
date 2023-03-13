@@ -7,20 +7,22 @@ export const useTrafficImagesAPI = (date: Date | undefined, time: String | undef
   const [data, setData] = useState<ITrafficImagesResponse | undefined>();
   const dateTime = date && time ? date.toLocaleDateString('fr-CA') + 'T' + formatTime(time) : null;
 
-  const callAPI = async () => {
-    if (dateTime) {
-      const { data } = await axios.get<ITrafficImagesResponse>(
-        `https://api.data.gov.sg/v1/transport/traffic-images?date_time=${dateTime}`,
-      );
-      return data;
-    }
-  };
-
   useEffect(() => {
+    const callAPI = async () => {
+      if (dateTime) {
+        const { data } = await axios.get<ITrafficImagesResponse>(
+          `${process.env.REACT_APP_TRAFFIC_IMAGES_URL}${dateTime}`,
+        );
+        return data;
+      }
+    };
+
     callAPI()
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+      })
       .catch((err) => {
-        console.log(err);
+        console.log('Error from useTrafficImagesAPI: ', err);
         setData(undefined);
       });
   }, [dateTime]);

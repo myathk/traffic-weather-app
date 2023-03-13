@@ -21,7 +21,7 @@ export const getAuthToken = (): Promise<IAuthTokenResponse> => {
     data: data,
   };
 
-  const callAPI = async () => {
+  const callAPI = async (): Promise<IAuthTokenResponse> => {
     const { data } = await axios(config);
     return data;
   };

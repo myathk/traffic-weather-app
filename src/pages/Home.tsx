@@ -11,7 +11,6 @@ import { getAreas } from '../functions/getAreas';
 import { getForecasts } from '../functions/getForecasts';
 import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithForecast';
 import { getTrafficCameraWithForecast } from '../functions/getTrafficCameraWithForecast';
-import { TrafficLocationListItem } from '../components/TrafficLocationListItem';
 import { Weather } from '../components/Weather';
 import { Image } from '../components/Image';
 import { Container } from '@mui/system';
@@ -21,13 +20,11 @@ import { getNestedTCwF } from '../functions/getNestedTCwF';
 import { TrafficLocationNestedList } from '../components/TrafficLocationNestedList';
 
 export const Home = () => {
+  const placeholderImage = 'https://www.lta.gov.sg/content/dam/ltagov/img/general/logo.png';
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState<string | undefined>();
   const [openAreaList, setOpenAreaList] = useState<string | null>(null);
-  const [selectedForecast, setSelectedForecast] = useState<IForecast | undefined>();
-  const [selectedImage, setSelectedImage] = useState<string>(
-    'https://www.lta.gov.sg/content/dam/ltagov/img/general/logo.png',
-  );
+  const [selectedTcwf, setSelectedTcwf] = useState<ITrafficCameraWithForecast | undefined>();
 
   const trafficImages: ITrafficImagesResponse | undefined = useTrafficImagesAPI(date, time);
   const weatherForecasts: IWeatherForecastsResponse | undefined = useWeatherForecastAPI(date, time);
@@ -44,16 +41,14 @@ export const Home = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setDate(new Date(event.target.value));
-    setSelectedForecast(undefined);
-    setSelectedImage('https://www.lta.gov.sg/content/dam/ltagov/img/general/logo.png');
+    setSelectedTcwf(undefined);
   };
 
   const handleTimeChange: React.ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setTime(event.target.value);
-    setSelectedForecast(undefined);
-    setSelectedImage('https://www.lta.gov.sg/content/dam/ltagov/img/general/logo.png');
+    setSelectedTcwf(undefined);
   };
 
   return (
@@ -80,8 +75,8 @@ export const Home = () => {
                   <TrafficLocationNestedList
                     tcwfs={item}
                     key={item[0].forecast.area}
-                    setForecast={setSelectedForecast}
-                    setImage={setSelectedImage}
+                    selectedTcwf={selectedTcwf}
+                    setSelectedTcwf={setSelectedTcwf}
                     openAreaList={openAreaList}
                     setOpenAreaList={setOpenAreaList}
                   />
@@ -91,8 +86,8 @@ export const Home = () => {
         </Grid>
 
         <Grid>
-          <Weather forecast={selectedForecast} />
-          <Image url={selectedImage} />
+          <Weather forecast={selectedTcwf?.forecast} />
+          <Image url={selectedTcwf ? selectedTcwf.trafficCamera.image : placeholderImage} />
         </Grid>
       </Grid>
     </Grid>

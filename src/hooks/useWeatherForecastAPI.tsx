@@ -7,21 +7,22 @@ export const useWeatherForecastAPI = (date: Date | undefined, time: String | und
   const [data, setData] = useState<IWeatherForecastsResponse | undefined>();
   const dateTime = date && time ? date.toLocaleDateString('fr-CA') + 'T' + formatTime(time) : null;
 
-  const callAPI = async () => {
-    if (dateTime) {
-      const { data } = await axios.get<IWeatherForecastsResponse>(
-        `https://api.data.gov.sg/v1/environment/2-hour-weather-forecast?date_time=${dateTime}`,
-      );
-
-      return data;
-    }
-  };
-
   useEffect(() => {
+    const callAPI = async () => {
+      if (dateTime) {
+        const { data } = await axios.get<IWeatherForecastsResponse>(
+          `${process.env.REACT_APP_WEATHER_URL}${dateTime}`,
+        );
+        return data;
+      }
+    };
+
     callAPI()
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+      })
       .catch((err) => {
-        console.log(err);
+        console.log('Error from useWeatherForecastAPI :', err);
         setData(undefined);
       });
   }, [dateTime]);

@@ -5,5 +5,12 @@ interface IDatePicker {
 }
 
 export const DatePicker = (props: IDatePicker) => {
-  return <input className='date-picker' type='date' onChange={props.handleChange} />;
+  return (
+    <input
+      className='date-picker'
+      type='date'
+      onChange={props.handleChange}
+      max={new Date().toISOString().split('T')[0]}
+    />
+  );
 };

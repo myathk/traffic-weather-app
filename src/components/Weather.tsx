@@ -40,7 +40,7 @@ export const Weather = (props: IWeather) => {
   return (
     <div className='weather'>
       <IconContext.Provider value={{ size: '300px' }}>
-        {props.forecast ? <WeatherDisplay forecast={props.forecast.forecast} /> : undefined}
+        {props.forecast ? <WeatherDisplay forecast={props.forecast.forecast} /> : 'WEATHER DISPLAY'}
       </IconContext.Provider>
       <h1>{props.forecast?.forecast}</h1>
     </div>

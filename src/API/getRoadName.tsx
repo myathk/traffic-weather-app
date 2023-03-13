@@ -15,14 +15,14 @@ interface IGeocodeObject {
   YCOORD: string;
 }
 
-const updateToken = () => {
-  getAuthToken()
-    .then((res: IAuthTokenResponse) => {
-      localStorage.setItem('authToken', res.access_token);
-      localStorage.setItem('expiryTime', res.expiry_timestamp);
-      return res.access_token;
-    })
-    .catch((err) => console.log(err));
+const updateToken = async () => {
+  try {
+    const res: IAuthTokenResponse = await getAuthToken();
+    localStorage.setItem('authToken', res.access_token);
+    localStorage.setItem('expiryTime', res.expiry_timestamp);
+  } catch (err) {
+    console.log('Error from getAuthToken API: ', err);
+  }
 };
 
 export const getRoadName = (location: ITrafficLocation) => {
@@ -34,14 +34,13 @@ export const getRoadName = (location: ITrafficLocation) => {
 
       if (expiryTime && Date.now() >= Number(expiryTime)) {
         //if token is expired already
-        updateToken();
+        await updateToken();
       }
     } else {
-      updateToken();
+      await updateToken();
     }
 
     token = localStorage.getItem('authToken');
-
     const { data } = await axios.get<IGeocodeInfo>(
       `https://developers.onemap.sg/privateapi/commonsvc/revgeocode?location=${location.latitude},${location.longitude}&token=${token}`,
     );
