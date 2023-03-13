@@ -26,4 +26,4 @@ You will also see any lint errors in the console.
 
 ## Design Considerations
 
-Additional notes can be found under design.txt file
+Additional notes can be found under [design.txt](https://github.com/myathk/traffic-weather-app/blob/main/design.txt) file
