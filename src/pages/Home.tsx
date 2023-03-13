@@ -108,6 +108,7 @@ export const Home = () => {
                 ? placeholderImage
                 : ''
             }
+            styling={selectedTcwf ? 'img' : 'start-img'}
           />
         </Grid>
       </Grid>

@@ -1,0 +1,40 @@
+Assumptions:
+
+If the weather or traffic images API is unable to return data, the list will be empty without notifying the user the reason.
+
+If OneMap API is unable to find a nearest road, no location information will be shown for the traffic camera except general Area.
+
+Layout between Web and Mobile view need not differ if the UI display works properly without distortion.
+
+Due to submission format, .env file is made public on the repository which imposes be a security risk.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+Design Considerations:
+
+With scalability in mind, a React Router is used to enable additional pages to be added when needed.
+Reusability of components is focused on as well as abstraction for readability and cleaner code. 
+
+Explanation of file structure ->
+
+1. API: 
+
+All API calls which do not use react hooks are put here. Local storage is used to store Auth token for future use.
+
+2. Components:
+
+Components are made to be reusable by passing in the necessary props to change their behaviours.
+
+3. Functions:
+
+Stateless pure functions which can be easily used anywhere and also tested.
+
+4. Hooks:
+
+Custom hooks to abstract out API calls that need to be called based on dependencies.
+
+5. Interfaces:
+
+Various Interfaces exported to define data returned from API calls.
+
+
+

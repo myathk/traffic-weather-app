@@ -41,6 +41,17 @@
 .img {
   width:600px;
   height:400px;
+  object-fit: fill;
+  padding: 10px;
+  border: solid;
+  border-width: 10px;
+  border-color: black;
+  margin-top: 15px;
+}
+
+.start-img {
+  width:600px;
+  height:400px;
   object-fit: contain;
   padding: 10px;
   border: solid;
