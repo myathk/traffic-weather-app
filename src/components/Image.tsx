@@ -5,5 +5,9 @@ interface IImage {
 }
 
 export const Image = (props: IImage) => {
-  return <img className='img' src={props.url} alt='' loading='lazy'></img>;
+  return (
+    <div>
+      <img className='img' src={props.url} alt='' loading='lazy'></img>;
+    </div>
+  );
 };

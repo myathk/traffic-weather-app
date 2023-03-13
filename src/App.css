@@ -3,9 +3,9 @@
   width: 200px;
   font-size: 24px;
   padding: 10px;
-  border: 2px solid rgb(151, 151, 214);
+  border: 2px solid #0099cc;
   border-width: 5px;
-  background-color: #3366ff;
+  background-color: #80dfff;
   border-radius: 20px 15px 15px 20px;
 }
 
@@ -14,21 +14,33 @@
   width: 200px;
   font-size: 24px;
   padding: 10px;
-  border: 2px solid rgb(151, 151, 214);
+  border: 2px solid #0099cc;
   border-width: 5px;
-  background-color: #3366ff;
+  background-color: #80dfff;
   border-radius: 15px 20px 20px 15px;
 }
 
 .weather {
   width: 600px;
   height: 400px;
-  background-color: #668cff;
+  background-color: #80dfff;
   text-align: center;
+  padding: 10px;
+  border: solid;
+  border-radius: 30px;
+  border-width: 10px;
+  border-color: black;
 }
 
 .img {
   width:600px;
   height:400px;
+  background-color: #80dfff;
   object-fit: fill;
+  padding: 10px;
+  border: solid;
+  border-radius: 30px;
+  border-width: 10px;
+  border-color: black;
+  margin-top: 15px;
 }

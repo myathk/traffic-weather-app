@@ -20,7 +20,7 @@ import { getNestedTCwF } from '../functions/getNestedTCwF';
 import { TrafficLocationNestedList } from '../components/TrafficLocationNestedList';
 
 export const Home = () => {
-  const placeholderImage = 'https://www.lta.gov.sg/content/dam/ltagov/img/general/logo.png';
+  const placeholderImage = process.env.REACT_APP_DEFAULT_TRAFFIC_IMAGE_URL;
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState<string | undefined>();
   const [openAreaList, setOpenAreaList] = useState<string | null>(null);
@@ -52,26 +52,39 @@ export const Home = () => {
   };
 
   return (
-    <Grid
-      direction={'column'}
-      container
-      alignItems={'center'}
-      style={{ backgroundColor: '#b3c6ff' }}
-    >
+    <Container maxWidth='xl' style={{ maxHeight: '100vh' }}>
       <Grid
-        justifyContent={'center'}
-        style={{ background: 'black' }}
-        sx={{ borderRadius: '30px', border: 'solid black 10px', margin: '15px' }}
+        direction={'column'}
+        container
+        alignItems={'center'}
+        style={{ backgroundColor: '#e6f9ff' }}
       >
-        <DatePicker handleChange={handleDateChange} />
-        <TimePicker handleChange={handleTimeChange} />
-      </Grid>
+        <Grid
+          justifyContent={'center'}
+          style={{ background: 'black' }}
+          sx={{ borderRadius: '30px', border: 'solid black 10px', margin: '15px' }}
+        >
+          <DatePicker handleChange={handleDateChange} />
+          <TimePicker handleChange={handleTimeChange} />
+        </Grid>
 
-      <Grid display={'flex'} flexDirection={'row'}>
-        <Grid style={{ maxHeight: '80vh', overflow: 'auto' }}>
-          <List style={{}}>
-            {nestedTCwF.length > 0
-              ? nestedTCwF.map((item) => (
+        <Grid display={'flex'} flexDirection={'row'}>
+          {nestedTCwF.length > 0 ? (
+            <Grid
+              sx={{
+                borderRadius: '30px',
+                border: 'solid black 10px',
+                margin: '15px',
+                overflow: 'hidden',
+              }}
+            >
+              <List
+                sx={{
+                  maxHeight: '85vh',
+                  overflow: 'auto',
+                }}
+              >
+                {nestedTCwF.map((item) => (
                   <TrafficLocationNestedList
                     tcwfs={item}
                     key={item[0].forecast.area}
@@ -80,16 +93,28 @@ export const Home = () => {
                     openAreaList={openAreaList}
                     setOpenAreaList={setOpenAreaList}
                   />
-                ))
-              : ''}
-          </List>
-        </Grid>
+                ))}
+              </List>
+            </Grid>
+          ) : (
+            ''
+          )}
 
-        <Grid>
-          <Weather forecast={selectedTcwf?.forecast} />
-          <Image url={selectedTcwf ? selectedTcwf.trafficCamera.image : placeholderImage} />
+          <Grid>
+            {nestedTCwF.length > 0 ? <Weather forecast={selectedTcwf?.forecast} /> : ''}
+
+            <Image
+              url={
+                selectedTcwf
+                  ? selectedTcwf.trafficCamera.image
+                  : placeholderImage
+                  ? placeholderImage
+                  : ''
+              }
+            />
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 };

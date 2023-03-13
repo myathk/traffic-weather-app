@@ -1,6 +1,5 @@
 import { Collapse, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithForecast';
-import { IForecast } from '../interfaces/IWeatherForecasts';
 import { TrafficListItem } from './TrafficListItem';
 import { useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
@@ -66,7 +65,7 @@ export const TrafficLocationNestedList = (props: ITrafficLocationNestedList) => 
 
   return (
     <>
-      <List>
+      <List sx={{ border: 'black solid 1px', margin: '2px' }}>
         <ListItem divider>
           <ListItemButton onClick={handleClick}>
             <ListItemText primary={tcwfs[0].forecast.area + ' Area'} />

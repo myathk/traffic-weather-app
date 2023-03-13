@@ -9,7 +9,18 @@ interface IListItem {
 export const TrafficListItem = (props: IListItem) => {
   return (
     <>
-      <ListItemButton divider onClick={props.handleClick} selected={props.selected}>
+      <ListItemButton
+        divider
+        onClick={props.handleClick}
+        selected={props.selected}
+        sx={{
+          borderRadius: '30px',
+          border: 'double black 2px',
+          '&.Mui-selected': {
+            background: '#80dfff',
+          },
+        }}
+      >
         <ListItemText primary={props.primaryText} secondary={props.secondaryText}></ListItemText>
       </ListItemButton>
     </>
