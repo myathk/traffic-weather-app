@@ -25,6 +25,13 @@ const updateToken = async () => {
   }
 };
 
+/**
+ * calls OneMap API reverse geo-coding service to get nearest road for
+ * given location in (lat, long)
+ *
+ * @param location location in (lat, long)
+ * @returns Promise with nearest road name
+ */
 export const getRoadName = (location: ITrafficLocation) => {
   const callAPI = async () => {
     var token: string | null = localStorage.getItem('authToken');
@@ -42,7 +49,7 @@ export const getRoadName = (location: ITrafficLocation) => {
 
     token = localStorage.getItem('authToken');
     const { data } = await axios.get<IGeocodeInfo>(
-      `https://developers.onemap.sg/privateapi/commonsvc/revgeocode?location=${location.latitude},${location.longitude}&token=${token}`,
+      `${process.env.REACT_APP_ONEMAP_URL}location=${location.latitude},${location.longitude}&token=${token}`,
     );
 
     if (data.GeocodeInfo.length > 0) {

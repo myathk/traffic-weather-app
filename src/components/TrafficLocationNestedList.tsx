@@ -1,4 +1,11 @@
-import { Collapse, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import {
+  CircularProgress,
+  Collapse,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
 import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithForecast';
 import { TrafficListItem } from './TrafficListItem';
 import { useState } from 'react';
@@ -15,11 +22,16 @@ interface ITrafficLocationNestedList {
 
 export const TrafficLocationNestedList = (props: ITrafficLocationNestedList) => {
   const [mapOfRoads, setMapOfRoads] = useState(new Map());
+  const [loading, setLoading] = useState(false);
 
   const tcwfs: ITrafficCameraWithForecast[] = props.tcwfs;
   const tcwf = tcwfs[0];
   const currOpen = props.openAreaList;
 
+  /**
+   * call OneMap API to obtain nearest road name to given location and add them to each tcwf to be displayed
+   * when the drop-down menu is called. store them in hashmap for future use
+   */
   const updateRoads = async () => {
     let promises: Promise<string>[] = [];
 
@@ -43,18 +55,24 @@ export const TrafficLocationNestedList = (props: ITrafficLocationNestedList) => 
     }
   };
 
+  /**
+   * when drop-down menu is clicked
+   */
   const handleClick = async () => {
     if (props.openAreaList === tcwfs[0].forecast.area) {
       props.setOpenAreaList(null);
     } else {
       if (mapOfRoads.size === 0) {
         try {
+          setLoading(true);
           await updateRoads();
         } catch (err) {
           console.log('Error in getRoadName API: ', err);
           setMapOfRoads(new Map());
         }
       }
+
+      setLoading(false);
       props.setOpenAreaList(tcwf.forecast.area);
     }
   };
@@ -65,10 +83,11 @@ export const TrafficLocationNestedList = (props: ITrafficLocationNestedList) => 
 
   return (
     <>
-      <List sx={{ border: 'black solid 1px', margin: '2px' }}>
-        <ListItem divider>
+      <List sx={{ border: 'black solid 2px', margin: '5px' }}>
+        <ListItem>
           <ListItemButton onClick={handleClick}>
-            <ListItemText primary={tcwfs[0].forecast.area + ' Area'} />
+            <ListItemText primary={tcwfs[0].forecast.area} />
+            {loading ? <CircularProgress /> : ''}
             {currOpen === tcwf.forecast.area ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
         </ListItem>

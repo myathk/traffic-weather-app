@@ -1,5 +1,11 @@
 import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithForecast';
 
+/**
+ * combines each tcwf with the same city area
+ *
+ * @param tcwfs array of traffic camera info with traffic images including corresponding weather
+ * @returns a nested array of tcwfs, which each corresponds to one different city area as defined in weather API response
+ */
 export const getNestedTCwF = (
   tcwfs: ITrafficCameraWithForecast[],
 ): ITrafficCameraWithForecast[][] | [] => {

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { getTrafficCameras } from '../functions/getTrafficCameras';
 import { ITrafficImagesResponse } from '../interfaces/ITrafficImages';
 import { useTrafficImagesAPI } from '../hooks/useTrafficImagesAPI';
-import { IForecast, IWeatherForecastsResponse } from '../interfaces/IWeatherForecasts';
+import { IWeatherForecastsResponse } from '../interfaces/IWeatherForecasts';
 import { useWeatherForecastAPI } from '../hooks/useWeatherForecastAPI';
 import { getAreas } from '../functions/getAreas';
 import { getForecasts } from '../functions/getForecasts';
@@ -13,8 +13,7 @@ import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithFore
 import { getTrafficCameraWithForecast } from '../functions/getTrafficCameraWithForecast';
 import { Weather } from '../components/Weather';
 import { Image } from '../components/Image';
-import { Container } from '@mui/system';
-import { Button, Grid, makeStyles } from '@mui/material';
+import { Grid } from '@mui/material';
 import List from '@mui/material/List';
 import { getNestedTCwF } from '../functions/getNestedTCwF';
 import { TrafficLocationNestedList } from '../components/TrafficLocationNestedList';
@@ -52,69 +51,66 @@ export const Home = () => {
   };
 
   return (
-    <Container maxWidth='xl' style={{ maxHeight: '100vh' }}>
+    <Grid direction={'column'} container alignItems={'center'}>
       <Grid
-        direction={'column'}
-        container
-        alignItems={'center'}
-        style={{ backgroundColor: '#e6f9ff' }}
+        justifyContent={'center'}
+        style={{ background: 'black' }}
+        sx={{
+          border: 'solid black 8px',
+          margin: '15px',
+          whiteSpace: 'nowrap',
+        }}
       >
-        <Grid
-          justifyContent={'center'}
-          style={{ background: 'black' }}
-          sx={{ borderRadius: '30px', border: 'solid black 10px', margin: '15px' }}
-        >
-          <DatePicker handleChange={handleDateChange} />
-          <TimePicker handleChange={handleTimeChange} />
-        </Grid>
+        <DatePicker handleChange={handleDateChange} />
+        <TimePicker handleChange={handleTimeChange} />
+      </Grid>
 
-        <Grid display={'flex'} flexDirection={'row'}>
-          {nestedTCwF.length > 0 ? (
-            <Grid
+      <Grid display={'flex'} flexDirection={'row'}>
+        {nestedTCwF.length > 0 ? (
+          <Grid
+            sx={{
+              border: 'solid black 10px',
+              overflow: 'hidden',
+              marginRight: '10px',
+              maxHeight: '745px',
+            }}
+          >
+            <List
               sx={{
-                borderRadius: '30px',
-                border: 'solid black 10px',
-                margin: '15px',
-                overflow: 'hidden',
+                maxHeight: '98%',
+                overflow: 'auto',
               }}
             >
-              <List
-                sx={{
-                  maxHeight: '85vh',
-                  overflow: 'auto',
-                }}
-              >
-                {nestedTCwF.map((item) => (
-                  <TrafficLocationNestedList
-                    tcwfs={item}
-                    key={item[0].forecast.area}
-                    selectedTcwf={selectedTcwf}
-                    setSelectedTcwf={setSelectedTcwf}
-                    openAreaList={openAreaList}
-                    setOpenAreaList={setOpenAreaList}
-                  />
-                ))}
-              </List>
-            </Grid>
-          ) : (
-            ''
-          )}
-
-          <Grid>
-            {nestedTCwF.length > 0 ? <Weather forecast={selectedTcwf?.forecast} /> : ''}
-
-            <Image
-              url={
-                selectedTcwf
-                  ? selectedTcwf.trafficCamera.image
-                  : placeholderImage
-                  ? placeholderImage
-                  : ''
-              }
-            />
+              {nestedTCwF.map((item) => (
+                <TrafficLocationNestedList
+                  tcwfs={item}
+                  key={item[0].forecast.area}
+                  selectedTcwf={selectedTcwf}
+                  setSelectedTcwf={setSelectedTcwf}
+                  openAreaList={openAreaList}
+                  setOpenAreaList={setOpenAreaList}
+                />
+              ))}
+            </List>
           </Grid>
+        ) : (
+          ''
+        )}
+
+        <Grid>
+          {nestedTCwF.length > 0 ? <Weather forecast={selectedTcwf?.forecast} /> : ''}
+
+          <Image
+            url={
+              selectedTcwf
+                ? selectedTcwf.trafficCamera.image
+                : placeholderImage
+                ? placeholderImage
+                : ''
+            }
+          />
         </Grid>
       </Grid>
-    </Container>
+    </Grid>
   );
 };

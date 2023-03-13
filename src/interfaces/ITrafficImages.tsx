@@ -1,3 +1,6 @@
+/**
+ * interface for return data of calling Traffic API
+ */
 export interface ITrafficImagesResponse {
   api_info: {
     status: 'healthy';

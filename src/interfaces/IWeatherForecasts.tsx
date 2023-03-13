@@ -1,5 +1,8 @@
 import { ITrafficLocation } from './ITrafficImages';
 
+/**
+ * interface for return value of calling weather API
+ */
 export interface IWeatherForecastsResponse {
   api_info: {
     status: 'healthy';

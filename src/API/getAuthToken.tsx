@@ -5,6 +5,12 @@ export interface IAuthTokenResponse {
   expiry_timestamp: string;
 }
 
+/**
+ * calls API to get auth token needed to use OneMap API. CORS server is needed
+ * to access this endpoint
+ *
+ * @returns Promise with auth token response
+ */
 export const getAuthToken = (): Promise<IAuthTokenResponse> => {
   const data = JSON.stringify({
     email: process.env.REACT_APP_ONEMAP_USERNAME,
@@ -14,7 +20,7 @@ export const getAuthToken = (): Promise<IAuthTokenResponse> => {
   const config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: process.env.REACT_APP_ONEMAP_URL,
+    url: process.env.REACT_APP_ONEMAP_TOKEN_URL,
     headers: {
       'Content-Type': 'application/json',
     },

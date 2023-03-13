@@ -37,12 +37,18 @@ const WeatherDisplay = (props: IWeatherDisplay) => {
 };
 
 export const Weather = (props: IWeather) => {
-  return (
+  return props.forecast ? (
     <div className='weather'>
-      <IconContext.Provider value={{ size: '300px' }}>
-        {props.forecast ? <WeatherDisplay forecast={props.forecast.forecast} /> : 'WEATHER DISPLAY'}
+      <IconContext.Provider value={{ size: '150px' }}>
+        <WeatherDisplay forecast={props.forecast.forecast} />
       </IconContext.Provider>
       <h1>{props.forecast?.forecast}</h1>
     </div>
+  ) : (
+    <img
+      className='weather-img'
+      src='https://www.openinnovationnetwork.gov.sg/images/default-source/default-album/organisation/network/nea_logo.jpg?sfvrsn=f618ece4_3'
+      alt=''
+    ></img>
   );
 };

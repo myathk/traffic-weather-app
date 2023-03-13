@@ -3,6 +3,14 @@ import { ITrafficCameraWithForecast } from '../interfaces/ITrafficCameraWithFore
 import { IArea, IForecast } from '../interfaces/IWeatherForecasts';
 import { getDistance } from '../utils/getDistance';
 
+/**
+ * get the nearest area of the target location and use the area to get the Weather Forecast in that area
+ *
+ * @param targetLocation location of traffic camera in (lat, long)
+ * @param areas area of Areas of which each has Area name and location in (lat, long)
+ * @param forecasts array of weather forecasts of which each has Area name and corresponding Weather Forecast
+ * @returns weather forecast with area name and forecast
+ */
 const getNearestForecast = (
   targetLocation: ITrafficLocation,
   areas: IArea[],
@@ -43,6 +51,9 @@ const getNearestForecast = (
   return nearestForecast[0];
 };
 
+/**
+ * adds weather forecast info to each in the array of traffic camera info and sort them based on Area name
+ */
 export const getTrafficCameraWithForecast = (
   trafficCameras: ITrafficCamera[],
   areas: IArea[],

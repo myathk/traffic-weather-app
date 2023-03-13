@@ -14,10 +14,10 @@ export const TrafficListItem = (props: IListItem) => {
         onClick={props.handleClick}
         selected={props.selected}
         sx={{
-          borderRadius: '30px',
-          border: 'double black 2px',
+          margin: '3px',
+          border: 'ridge #8bd0da 3px',
           '&.Mui-selected': {
-            background: '#80dfff',
+            background: '#aedfe5',
           },
         }}
       >
