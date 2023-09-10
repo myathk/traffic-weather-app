@@ -1,13 +1,3 @@
-Assumptions:
-
-If the weather or traffic images API is unable to return data, the list will be empty without notifying the user the reason.
-
-If OneMap API is unable to find a nearest road, no road information will be shown for the traffic camera except general Area.
-
-Layout between Web and Mobile view need not differ if the UI display works properly without distortion.
-
-Due to submission format, .env file is made public on the repository which imposes a security risk.
-
 ----------------------------------------------------------------------------------------------------------------------------------------
 Design Considerations:
 
